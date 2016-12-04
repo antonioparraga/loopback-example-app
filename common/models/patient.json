@@ -15,24 +15,23 @@
     },
     "SIP": {
       "type": "string",
-      "id": false,
       "required": true,
+      "unique": true,
+      "index": true,
       "description": "This is the SIP of the patient"
     },
     "birthDate": {
       "type": "date",
-      "required": false,
       "description": "Birthdate of the patient"
     },
     "name": {
       "type": "string",
-      "required": false,
       "description": "Complete name (first and last name)"
     },
     "phone": {
       "type": "string",
-      "required": false,
       "index": true,
+      "unique": true,
       "description": "Phone (should be unique)"
     }
   },

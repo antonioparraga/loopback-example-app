@@ -10,34 +10,49 @@ describe('Service Request Tests', function () {
   var Patient;
   var Service;
   var ServiceRequest;
+  var createdPatient;
 
-  before(function() {
+  before(function(done) {
     Patient = server.models.Patient;
     Service = server.models.Service;
     ServiceRequest = server.models.ServiceRequest;
+
+    var patient = new Patient({
+      SIP: '12345',
+      phone: '965735162',
+      name: 'John Rambo'
+    });
+
+    Patient.create(patient, function(err, persistedPatient) {
+      createdPatient = persistedPatient;
+      done();
+    });
+
   })
 
-  it('Create a new Service Request', function (done) {
+  it('Create a new Service Request for an existing Patient', function (done) {
 
     ServiceRequest.create({
       date: new Date(),
-      serviceType: 1
+      serviceType: 1,
+      patient: { SIP: '12345' }
     }, function(err, serviceRequest) {
 
-      //assert.equal(serviceRequest.date, date);
       expect(serviceRequest).to.exist;
       expect(serviceRequest.serviceType).to.equal(1);
+      expect(serviceRequest.patientId).to.equal(createdPatient.id);
       done();
 
     })
   });
 
-  it('Create a Service Request and a Patient at once', function (done) {
+  it('Create a Service Request for an unexisting Patient', function (done) {
 
-    var patient = new Patient()
-    patient.SIP = '12345';
-    patient.phone = '965735162';
-    patient.name = 'John Rambo';
+    var patient = new Patient({
+      SIP: '112233',
+      phone: '661764893',
+      name: 'Peggy Sue'
+    });
 
     var date = new Date();
 
@@ -58,6 +73,7 @@ describe('Service Request Tests', function () {
 
     })
   });
+
 
   it('Check serviceDescription calculated field', function (done) {
 

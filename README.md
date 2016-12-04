@@ -271,15 +271,16 @@ We can execute all the tests from root directory via `npm test` command:
 $npm test
 
   Rest API
-    ✓ Post a new patient (77ms)
+    ✓ Post a new patient (79ms)
 
   Service Request Tests
-    ✓ Create a new Service Request
-    ✓ Create a Service Request and a Patient at once
+    ✓ Create a new Service Request for an existing Patient
+    ✓ Create a Service Request for an unexisting Patient
     ✓ Check serviceDescription calculated field
 
 
-  4 passing (102ms)
+  4 passing (103ms)
+
 ```
 
 The [Rest API Test](https://github.com/aparraga/loopback-example-app/blob/master/tests/api/test.js) launches a server (within milliseconds :) and test the API by calling to create a new patient via rest.

@@ -18,11 +18,11 @@ describe('Rest API', function () {
   })
 
   beforeEach(function (done) {
-    Patient.upsert({SIP: 12334, phone: '661798444'}, function() { done() })
+    Patient.upsert({SIP: 11111, phone: '661798444'}, function() { done() })
   })
 
   it('Post a new patient', function (done) {
-    request.post('/api/patients').send({SIP: 12345}).expect(200, done)
+    request.post('/api/patients').send({SIP: 22222}).expect(200, done)
   });
 
 
