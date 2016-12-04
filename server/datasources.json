@@ -1,0 +1,9 @@
+{
+  "db": {
+    "host": "127.0.0.1",
+    "url": "",
+    "database": "sp",
+    "name": "db",
+    "connector": "mongodb"
+  }
+}

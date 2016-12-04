@@ -1,0 +1,50 @@
+{
+  "name": "google-libphonenumber",
+  "description": "The up-to-date and reliable Google's libphonenumber package for node.js.",
+  "homepage": "http://seegno.github.io/google-libphonenumber/",
+  "author": {
+    "name": "Rui Marinho",
+    "email": "rui.marinho@seegno.com",
+    "url": "http://seegno.com"
+  },
+  "main": "./dist/libphonenumber.js",
+  "license": "MIT",
+  "keywords": [
+    "browserify",
+    "e164",
+    "format",
+    "formatting",
+    "international",
+    "libphonenumber",
+    "number",
+    "phone",
+    "phonenumber",
+    "rfc3966",
+    "standardize",
+    "wrapper"
+  ],
+  "ignore": [
+    ".eslintignore",
+    ".eslintrc.yml",
+    ".gitattributes",
+    ".gitignore",
+    ".jscsrc",
+    ".travis.yml",
+    "/bin",
+    "/src",
+    "/test",
+    "bower.json",
+    "build.xml"
+  ],
+  "version": "2.0.6",
+  "_release": "2.0.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.6",
+    "commit": "6c2dcf9a20186f823f8485a24307124cd3a458dc"
+  },
+  "_source": "https://github.com/seegno/google-libphonenumber.git",
+  "_target": "^2.0.6",
+  "_originalSource": "google-libphonenumber",
+  "_direct": true
+}

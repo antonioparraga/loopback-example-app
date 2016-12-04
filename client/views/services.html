@@ -1,0 +1,26 @@
+<div class="container" ng-init="init()">
+<h1>Servicios</h1>
+
+<table class="table table-striped">
+  <thead>
+  <td>Fecha</td>
+  <td>Tipo</td>
+  <td>SIP</td>
+  <td>Teléfono</td>
+  </thead>
+  <tr ng-repeat="service in services" ng-click="showRow(service.id)">
+    <td>
+      {{service.date}}
+    </td>
+    <td>
+      {{service.serviceRequest.serviceDescription}}
+    </td>
+    <td>
+      {{service.patient.SIP}}
+    </td>
+    <td>
+      {{service.patient.phone}}
+    </td>
+  </tr>
+</table>
+</div>

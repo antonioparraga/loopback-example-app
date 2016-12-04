@@ -1,0 +1,54 @@
+{
+  "name": "Patient",
+  "plural": "patients",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "persistUndefinedAsNull": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "id": true,
+      "defaultFn": "guid"
+    },
+    "SIP": {
+      "type": "string",
+      "id": false,
+      "required": true,
+      "description": "This is the SIP of the patient"
+    },
+    "birthDate": {
+      "type": "date",
+      "required": false,
+      "description": "Birthdate of the patient"
+    },
+    "name": {
+      "type": "string",
+      "required": false,
+      "description": "Complete name (first and last name)"
+    },
+    "phone": {
+      "type": "string",
+      "required": false,
+      "index": true,
+      "description": "Phone (should be unique)"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "services": {
+      "type": "hasMany",
+      "model": "Service",
+      "foreignKey": "patientId"
+    },
+    "serviceRequests": {
+      "type": "hasMany",
+      "model": "ServiceRequest",
+      "foreignKey": "patientId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

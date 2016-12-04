@@ -1,0 +1,63 @@
+<div class="container" ng-init="init()">
+  <div class="row">
+    <div class='col-sm-6'>
+      <h1>Nueva petición de servicio</h1>
+
+      <form novalidate angular-validator angular-validator-submit='submitForm()' name="newservicerequestform">
+        <div class="form-group">
+          <label for="inputSip">SIP</label>
+          <input type="text"
+                 ng-model="input.sip"
+                 class="form-control"
+                 required-message="'El SIP es obligatorio'"
+                 required
+                 validate-on="blur"
+                 ng-change="findPatient(input.sip)"
+                 id="inputSip"
+                 autocomplete="off"
+                 name="inputSip"
+                 placeholder="Código SIP del cliente">
+        </div>
+        <div class="form-group">
+          <label for="inputPhone">Teléfono</label>
+          <input type="text"
+                 ng-model="input.phone"
+                 validator="validatePhone(input.phone)"
+                 invalid-message="'El telefono no parece correcto'"
+                 required-message="'El telefono es obligatorio'"
+                 required
+                 autocomplete="off"
+                 validate-on="blur"
+                 class="form-control"
+                 name="inputPhone"
+                 id="inputPhone"
+                 placeholder="Teléfono del cliente">
+        </div>
+        <div class="form-group">
+          <label for="inputDate">Fecha para el servicio</label>
+          <div class='input-group date' id='datetimepicker1'>
+            <input ng-model="input.date" type='text' class="form-control" id="inputDate"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputDate">Tipo de tratamiento</label>
+          <div class='input-group'>
+            <label class="radio-inline">
+              <input type="radio" ng-model="input.serviceType" name="inlineRadioOptions" id="inlineRadio1" ng-value="1"> Dialisis
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="input.serviceType" name="inlineRadioOptions" id="inlineRadio2" ng-value="2"> Quimio
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="input.serviceType" name="inlineRadioOptions" id="inlineRadio3" ng-value="3"> Radio
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
