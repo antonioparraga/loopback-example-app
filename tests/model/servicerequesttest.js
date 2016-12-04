@@ -41,7 +41,12 @@ describe('Service Request Tests', function () {
       expect(serviceRequest).to.exist;
       expect(serviceRequest.serviceType).to.equal(1);
       expect(serviceRequest.patientId).to.equal(createdPatient.id);
-      done();
+
+      //also check that a Service has been created from the Service Request
+      Service.find({where: {serviceRequestId: serviceRequest.id}}, function(err, service) {
+        expect(service).to.exist;
+        done();
+      });
 
     })
   });
@@ -68,7 +73,14 @@ describe('Service Request Tests', function () {
 
       Patient.findById(serviceRequest.patientId, function(err, persistedPatient) {
         expect(persistedPatient.SIP).to.equal(patient.SIP);
-        done();
+        expect(persistedPatient.phone).to.equal(patient.phone);
+
+        //also check that a Service has been created from the Service Request
+        Service.find({where: {serviceRequestId: serviceRequest.id}}, function(err, service) {
+          expect(service).to.exist;
+          done();
+        });
+
       });
 
     })
