@@ -1,7 +1,7 @@
 # loopback-example-app
 
-This is an implementation of a really simple application to create ambulance transportation requests.
-The application has been created using Loopback.
+This is the implementation of a really really simple application in `Node` and `Loopback` to create ambulance transportation requests.
+It has 3 entities ([Patient](https://github.com/aparraga/loopback-example-app/blob/master/common/models/patient.json), [ServiceRequest](https://github.com/aparraga/loopback-example-app/blob/master/common/models/service-request.json) and [Service](https://github.com/aparraga/loopback-example-app/blob/master/common/models/service.json)).
 
 ## Project layout
 
@@ -34,7 +34,7 @@ For example, this is the code in client side to get all the services, and for ea
       });
 
 ```
-`/client/js/controllers/services.js`
+[services](https://github.com/aparraga/loopback-example-app/blob/master/client/js/controllers/services.js)
 
 Nothing else!
 
@@ -45,7 +45,7 @@ This is the code to validate a phone using a server side library from client (be
     return returnValue;
     
 ```
-`/client/js/controllers/newservicerequest.js`
+[newservicerequest.js](https://github.com/aparraga/loopback-example-app/blob/master/client/js/controllers/newservicerequest.js)
 
 # Common
 
@@ -54,10 +54,8 @@ This is where we define the common part of the model, meaning the classes that w
 ## Model and Persistence
 
 Persistence in loopback is performed by [Juggler](https://github.com/strongloop/loopback-datasource-juggler), an ORM/ODM that provides a common set of interfaces for interacting with databases, REST APIs, and other types of data sources. It was originally forked from [JugglingDB](https://github.com/1602/jugglingdb).
-Take into account that traditional ORMs are designed to work mainly against databases. This way allow to interact with whatever and make completely transparent the source of the information.
 
-
-Model is defined within the subdirectory `models`. Each entity within our model has an specification file in .json and a .js file to add business logic and customize the entity.
+Entities are defined within the subdirectory `models`. Each entity has an .json specification file and a .js file for custom business logic and behavior.
 
 Example of .json specification for the entity Patient:
 
@@ -117,45 +115,134 @@ Example of .json specification for the entity Patient:
   "methods": {}
 }
 ```
+[patient.json](https://github.com/aparraga/loopback-example-app/blob/master/common/models/patient.json)
 
 By defining just this single file, loopback will generate a really complete restful API to allow creating, modifying, deleting and querying patients from client side:
 
+Verb        | Route           | Description  |
+--- | --- | ---
+PATCH | /patients | Patch an existing model instance or insert a new one into the data source.
+GET | /patients | Find all instances of the model matched by filter from the data source. 
+PUT | /patients | Patch an existing model instance or insert a new one into the data source. 
+POST | /patients | Create a new instance of the model and persist it into the data source. 
+PATCH | /patients/{id} | Patch attributes for a model instance and persist it into the data source. 
+GET | /patients/{id} | Find a model instance by {{id}} from the data source. 
+HEAD | /patients/{id} | Check whether a model instance exists in the data source. 
+PUT | /patients/{id} | Patch attributes for a model instance and persist it into the data source. 
+DELETE | /patients/{id} | Delete a model instance by {{id}} from the data source. 
+GET | /patients/{id}/exists | Check whether a model instance exists in the data source. 
+POST | /patients/{id}/replace | Replace attributes for a model instance and persist it into the data source. 
+GET | /patients/{id}/serviceRequests | Queries serviceRequests of Patient. 
+POST | /patients/{id}/serviceRequests | Creates a new instance in serviceRequests of this model. 
+DELETE | /patients/{id}/serviceRequests | Deletes all serviceRequests of this model. 
+GET | /patients/{id}/serviceRequests/{fk} | Find a related item by id for serviceRequests. 
+PUT | /patients/{id}/serviceRequests/{fk} | Update a related item by id for serviceRequests. 
+DELETE | /patients/{id}/serviceRequests/{fk} | Delete a related item by id for serviceRequests. 
+GET | /patients/{id}/serviceRequests/count | Counts serviceRequests of Patient. 
+GET | /patients/{id}/services | Queries services of Patient. 
+POST | /patients/{id}/services | Creates a new instance in services of this model. 
+DELETE | /patients/{id}/services | Deletes all services of this model. 
+GET | /patients/{id}/services/{fk} | Find a related item by id for services. 
+PUT | /patients/{id}/services/{fk} | Update a related item by id for services. 
+DELETE | /patients/{id}/services/{fk} | Delete a related item by id for services. 
+GET | /patients/{id}/services/count | Counts services of Patient. 
+GET | /patients/change-stream | Create a change stream. 
+POST | /patients/change-stream | Create a change stream. 
+GET | /patients/count | Count instances of the model matched by where from the data source. 
+GET | /patients/findOne | Find first instance of the model matched by filter from the data source. 
+POST | /patients/replaceOrCreate | Replace an existing model instance or insert a new one into the data source. 
+POST | /patients/update | Update instances of the model matched by {{where}} from the data source. 
+POST | /patients/upsertWithWhere | Update an existing model instance or insert a new one into the data source based on the where criteria. 
+
+It also generates the swagger specification with all the descriptions and so, so QA can use it within their own testing framework.
+
+It's really simple to create new services or hook existing. For example, the following code is being executed right after creating and saving a new Service Request:
+
+```javascript
+  ServiceRequest.observe('after save', function(ctx, next) {
+
+    if(ctx.isNewInstance) {
+
+      var Service = ServiceRequest.app.models.Service;
+
+      Service.create({
+        date: ctx.instance.date,
+        serviceRequestId: ctx.instance.id,
+        patientId: ctx.instance.patientId
+      }, function(err, service) {
+
+        //great!
+
+      });
+    }
+
+    next();
+
+
+  });
 ```
-PATCH /patients Patch an existing model instance or insert a new one into the data source.
-GET /patients Find all instances of the model matched by filter from the data source.
-PUT /patients Patch an existing model instance or insert a new one into the data source.
-POST /patients Create a new instance of the model and persist it into the data source.
-PATCH /patients/{id} Patch attributes for a model instance and persist it into the data source.
-GET /patients/{id} Find a model instance by {{id}} from the data source.
-HEAD /patients/{id} Check whether a model instance exists in the data source.
-PUT /patients/{id} Patch attributes for a model instance and persist it into the data source.
-DELETE /patients/{id} Delete a model instance by {{id}} from the data source.
-GET /patients/{id}/exists Check whether a model instance exists in the data source.
-POST /patients/{id}/replace Replace attributes for a model instance and persist it into the data source.
-GET /patients/{id}/serviceRequests Queries serviceRequests of Patient.
-POST /patients/{id}/serviceRequests Creates a new instance in serviceRequests of this model.
-DELETE /patients/{id}/serviceRequests Deletes all serviceRequests of this model.
-GET /patients/{id}/serviceRequests/{fk} Find a related item by id for serviceRequests.
-PUT /patients/{id}/serviceRequests/{fk} Update a related item by id for serviceRequests.
-DELETE /patients/{id}/serviceRequests/{fk} Delete a related item by id for serviceRequests.
-GET /patients/{id}/serviceRequests/count Counts serviceRequests of Patient.
-GET /patients/{id}/services Queries services of Patient.
-POST /patients/{id}/services Creates a new instance in services of this model.
-DELETE /patients/{id}/services Deletes all services of this model.
-GET /patients/{id}/services/{fk} Find a related item by id for services.
-PUT /patients/{id}/services/{fk} Update a related item by id for services.
-DELETE /patients/{id}/services/{fk} Delete a related item by id for services.
-GET /patients/{id}/services/count Counts services of Patient.
-GET /patients/change-stream Create a change stream.
-POST /patients/change-stream Create a change stream.
-GET /patients/count Count instances of the model matched by where from the data source.
-GET /patients/findOne Find first instance of the model matched by filter from the data source.
-POST /patients/replaceOrCreate Replace an existing model instance or insert a new one into the data source.
-POST /patients/update Update instances of the model matched by {{where}} from the data source.
-POST /patients/upsertWithWhere Update an existing model instance or insert a new one into the data source based on the where criteria.
+[service-request.js](https://github.com/aparraga/loopback-example-app/blob/master/common/models/service-request.js)
+
+Hooks are in fact one of the most powerful features of loopback. For example, imagine that we want to log each time someone access to a given information:
+
+```javascript
+  Service.observe('access', function logQuery(ctx, next) {
+
+    if(!!ctx.query && !!ctx.query.where && !!ctx.query.where.id) {
+      console.log('Usuario X ha accedido al Servicio ' + ctx.query.where.id);
+    }
+
+    next();
+  });
+```
+[service.js](https://github.com/aparraga/loopback-example-app/blob/master/common/models/service.js)
+
+It's also really useful to send events to a separate backend, for example, whenever node acts as a middleware and it's just part of the frontend.
+
+## Mixins
+
+Sometime we need to add common logic to more than one entities. Mixins allow to define logic and them associate it to a set of model entities.
+
+For example:
+```
+  Model.observe('before save', function event(ctx, next) { //Observe any insert/update event on Model
+
+    Model.beginTransaction({isolationLevel: Post.Transaction.READ_COMMITTED}, function(err, tx) {
+      ctx.options.transaction = tx;
+      next();
+    });
+
+  });
+```
+[transactionsupport.js](https://github.com/aparraga/loopback-example-app/blob/master/common/mixins/transactionsupport.js)
+
+This mixin start a new transaction, so we don't need to care about within the code of each custom operation of an entity.
+
+# Tests
+
+In this sample we have defined 2 kind of tests:
+- Rest API Tests
+- Model tests
+
+We use [Mocha](http://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest) for Rest API testing.
+
+We can execute all the tests from root directory via `npm test` command:
+
+```
+$npm test
+
+  Rest API
+    ✓ Post a new patient (77ms)
+
+  Service Request Tests
+    ✓ Create a new Service Request
+    ✓ Create a Service Request and a Patient at once
+    ✓ Check serviceDescription calculated field
+
+
+  4 passing (102ms)
 ```
 
-However, because loopback also generate a file to reuse the same API from client side, we are going to ignore the existente of this API.
-
-We can also customize the behaviour of out entity Patient by adding code to the patient.js file.
+The [Rest API Test](https://github.com/aparraga/loopback-example-app/blob/master/tests/api/test.js) launches a server (within milliseconds :) and test the API by calling to create a new patient via rest.
+The [Service Request Test](https://github.com/aparraga/loopback-example-app/blob/master/tests/model/servicerequesttest.js) checks a few crud operations and business logic associated to it.
 
