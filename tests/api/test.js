@@ -4,6 +4,7 @@ var chai = require('chai');
 var expect = chai.expect; // we are using the "expect" style of Chai
 var server = require('../../server/server')
 var request = require('supertest')(server)
+var GLOBAL_CONFIG = require('../../global-config');
 
 describe('Rest API', function () {
 
@@ -22,7 +23,7 @@ describe('Rest API', function () {
   })
 
   it('Post a new patient', function (done) {
-    request.post('/api/patients').send({SIP: 22222}).expect(200, done)
+    request.post(GLOBAL_CONFIG.restApiRoot + '/patients').send({SIP: 22222}).expect(200, done)
   });
 
 
