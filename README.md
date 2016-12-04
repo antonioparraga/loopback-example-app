@@ -8,7 +8,7 @@ It has 3 entities ([Patient](https://github.com/aparraga/loopback-example-app/bl
 - `server` - Node application scripts and configuration files.
 - `client` - Client JavaScript, HTML, and CSS files.
 - `common` - Files common to client and server. The /models sub-directory contains all model JSON and JavaScript files. The /utils sub-directory contains libraries that are browserified and used in both server and client side
-- `definitions` - API and product definition YAML files (IBM API Connect only).
+- `definitions` - API and product definition YAML files
 - `tests` - Unit tests
 
 The development is isomorphic. Javascript was traditionally the language of the web browser, performing computations directly on a user’s machine. This is referred to as “client-side” processing. With the advent of Node.js, JavaScript has become a compelling “server-side” language as well, which was traditionally the domain of languages like Java, Python and PHP.
