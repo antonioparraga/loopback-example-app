@@ -35,7 +35,7 @@ describe('Service Request Tests', function () {
     ServiceRequest.create({
       date: new Date(),
       serviceType: 1,
-      patient: { SIP: '12345' }
+      patient: new Patient({ SIP: '12345' })
     }, function(err, serviceRequest) {
 
       expect(serviceRequest).to.exist;
