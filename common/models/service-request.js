@@ -4,8 +4,7 @@ module.exports = function(ServiceRequest) {
 
   ServiceRequest.observe('before save', function(ctx, next) {
 
-    var app = require('./../../server/server');
-    var Patient = app.models.Patient;
+    var Patient = ServiceRequest.app.models.Patient;
 
     //if the instance contains the info of the patient
     if(!!ctx.instance.patient && !ctx.instance.patient.id && !!ctx.instance.__cachedRelations.patient) {
