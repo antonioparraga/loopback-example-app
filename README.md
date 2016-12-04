@@ -34,7 +34,7 @@ For example, this is the code in client side to get all the services, and for ea
       });
 
 ```
-[services](https://github.com/aparraga/loopback-example-app/blob/master/client/js/controllers/services.js)
+[services.js](https://github.com/aparraga/loopback-example-app/blob/master/client/js/controllers/services.js)
 
 Nothing else!
 
