@@ -285,3 +285,4 @@ $npm test
 The [Rest API Test](https://github.com/aparraga/loopback-example-app/blob/master/tests/api/test.js) launches a server (within milliseconds :) and test the API by calling to create a new patient via rest.
 The [Service Request Test](https://github.com/aparraga/loopback-example-app/blob/master/tests/model/servicerequesttest.js) checks a few crud operations and business logic associated to it.
 
+Note that we have defined within our project a different datasource for testing at [datasources.test.json](https://github.com/aparraga/loopback-example-app/blob/master/server/datasources.test.json). This datasource uses a memory database implementation, so tests are being passed without altering the real database.
