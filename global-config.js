@@ -5,10 +5,13 @@
 
 var url = require('url');
 
+var p = require('./package.json');
+var version = p.version.split('.').shift();
+
 var conf = {
   hostname: '127.0.0.1',
   port: 3000,
-  restApiRoot: '/api', // The path where to mount the REST API app
+  restApiRoot: '/api' + (version > 0 ? '/v' + version : ''), // The path where to mount the REST API app
   legacyExplorer: false
 };
 

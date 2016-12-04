@@ -7,6 +7,7 @@ var loopbackAngular = require('gulp-loopback-sdk-angular');
 var sh = require('shelljs');
 var browserify = require('browserify');
 var fs = require('fs');
+var GLOBAL_CONFIG = require('./global-config')
 
 var paths = {
   lbmodel: ['common/models/*.js', 'common/*.js', 'models/*.json', 'global-config.js']
@@ -24,7 +25,7 @@ gulp.task('vendor', function(callback) {
 
 gulp.task('lb-services', function () {
   return gulp.src('server/server.js')
-    .pipe(loopbackAngular({ apiUrl: 'http://127.0.0.1:3000/api' }))
+    .pipe(loopbackAngular({ apiUrl: GLOBAL_CONFIG.restApiUrl }))
     .pipe(rename('lb-services.js'))
     .pipe(gulp.dest('client/js/services'));
 });
